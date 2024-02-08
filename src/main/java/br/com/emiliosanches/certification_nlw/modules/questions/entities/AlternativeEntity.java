@@ -1,7 +1,6 @@
-package br.com.emiliosanches.certification_nlw.modules.students.entities;
+package br.com.emiliosanches.certification_nlw.modules.questions.entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,26 +10,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity(name = "alternatives")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "students")
-public class StudentEntity {
+public class AlternativeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(unique = true, nullable = false)
-  private String email;
+  private String description;
 
-  @OneToMany(mappedBy = "studentEntity")
-  private List<StudentCertificationEntity> certifications;
-  
+  @Column(name = "is_correct")
+  private boolean isCorrect;
+
   @CreationTimestamp
   private LocalDateTime createdAt;
 }

@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,18 +21,29 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "students")
-public class StudentEntity {
+@Entity(name = "certifications")
+public class StudentCertificationEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(unique = true, nullable = false)
-  private String email;
+  @Column(name = "student_id")
+  private UUID studentId;
 
-  @OneToMany(mappedBy = "studentEntity")
-  private List<StudentCertificationEntity> certifications;
-  
+  @Column(length = 100)
+  private String technology;
+
+  @Column(length = 10)
+  private int grade;
+
+  @ManyToOne
+  @JoinColumn(name = "student_id", insertable = false, updatable = false)
+  private StudentEntity studentEntity;
+
+  @OneToMany
+  @JoinColumn(name = "certification_answer_id")
+  private List<CertificationAnswersEntity> answersCertificationsEntity;
+
   @CreationTimestamp
   private LocalDateTime createdAt;
 }
